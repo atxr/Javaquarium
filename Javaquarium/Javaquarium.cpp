@@ -3,10 +3,21 @@
 
 #include "pch.h"
 #include <iostream>
+#include "Aquarium.h"
+#include "Especes.h"
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	Aquarium *aquarium = new Aquarium();
+	aquarium->AjouterAlgue(new Algue());
+	aquarium->AjouterPoisson(new Merou("Matthieu", 1));
+	aquarium->PasserTemps();
+	aquarium->AjouterAlgue(new Algue());
+	aquarium->AjouterPoisson(new PoissonClown("Greg", 1));
+	aquarium->AjouterPoisson(new Bar("Baptiste", 1));
+	aquarium->AjouterPoisson(new Carpe("Justine", 2));
+	aquarium->PasserTemps();
+	aquarium->PasserTemps();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -7,5 +7,6 @@ public:
 	PoissonHerbivore(std::string nom, int sexe);
 	~PoissonHerbivore();
 	virtual void Manger(Nourriture *nourriture);
+	virtual bool GetTypeNourriture();
 };
 

@@ -11,11 +11,13 @@ int main()
 	Aquarium *aquarium = new Aquarium();
 	aquarium->AjouterAlgue(new Algue());
 	aquarium->AjouterPoisson(new Merou("Matthieu", 1));
+	aquarium->AjouterPoisson(new Merou("Marie", 1));
 	aquarium->PasserTemps();
 	aquarium->AjouterAlgue(new Algue());
 	aquarium->AjouterPoisson(new PoissonClown("Greg", 1));
 	aquarium->AjouterPoisson(new Bar("Baptiste", 1));
 	aquarium->AjouterPoisson(new Carpe("Justine", 2));
+	aquarium->PasserTemps();
 	aquarium->PasserTemps();
 	aquarium->PasserTemps();
 }

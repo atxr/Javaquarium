@@ -5,6 +5,10 @@
 #include <iostream>
 #include <random>
 
+#define OUT
+using TPoisson = std::vector<Poisson*>;
+using TAlgue = std::vector<Algue*>;
+
 class Aquarium
 {
 public:
@@ -14,7 +18,10 @@ public:
 	void AjouterPoisson(Poisson *poisson);
 	void AjouterAlgue(Algue *algue);
 private:
-	std::vector<Poisson*> TabPoisson; // TODO create a type of special array for 
-	std::vector<Algue*> TabAlgue;     // both of these to vector
+	void PoissonPasNourri(OUT TPoisson *T_);
+	void Update();
+
+	TPoisson T_Poisson; // TODO create a type of special array for 
+	TAlgue T_Algue;     // both of these to vector
 };
 

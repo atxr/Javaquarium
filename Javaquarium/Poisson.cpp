@@ -6,7 +6,7 @@ Poisson::Poisson()
 {
 }
 
-Poisson::Poisson(std::string nom, int sexe) : Nom(nom), Sexe(sexe)
+Poisson::Poisson(std::string nom, int sexe) : Nom(nom), Sexe(sexe), EstNourri(false)
 {
 }
 
@@ -19,4 +19,5 @@ Poisson::~Poisson()
 
 std::string Poisson::GetName() { return Nom; }
 int Poisson::GetSexe() { return Sexe; }
-bool Poisson::GetTypeNourriture() { return true; /* ie nourriture pour carnivore */ }
+bool Poisson::GetEstNourri() { return EstNourri; }
+void Poisson::SetEstNourri(bool estnourri) { EstNourri = estnourri; };

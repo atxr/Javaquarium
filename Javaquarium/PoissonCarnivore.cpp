@@ -17,8 +17,9 @@ PoissonCarnivore::~PoissonCarnivore()
 
 void PoissonCarnivore::Manger(Nourriture * nourriture)
 {
-	if (nourriture->GetTypeNourriture() == true)
-	{
-		// TODO on mange
-	}
+	EstNourri = true;
+	// TODO on mange
+	nourriture->SetEstVivant(false);
 }
+
+bool PoissonCarnivore::GetTypeNourriture() { return true; }

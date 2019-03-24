@@ -15,36 +15,65 @@ void Aquarium::PasserTemps()
 {
 	//// Actions ////
 
-	// Manger
-	std::vector<Poisson*> buffer = TabPoisson;
-	while (buffer.size() > 0)
+	//Initialiser appetit
+	for (auto &poisson : T_Poisson)
 	{
-		int rd = rand() % buffer.size(); //TODO create a function
-		Poisson *poisson = buffer[rd];
-		buffer.erase(buffer.begin() + rd);
-
-		if (poisson->GetTypeNourriture() && buffer.size() > 0)
-		{
-			int rd1 = rand() % buffer.size();
-			Poisson *poisson1 = buffer[rd1];
-			poisson->Manger(poisson1);
-			buffer.erase(buffer.begin() + rd1);
-		}
-
-		else if (!poisson->GetTypeNourriture() && TabAlgue.size() > 0)
-		{
-			poisson->Manger(TabAlgue[-1]);
-			TabAlgue.erase(TabAlgue.end());
-		}
-
-		//TODO delete the eaten fish
+		poisson->SetEstNourri(false);
 	}
 
-	std::cout << "Il y a " << TabAlgue.size() << " algue(s) et " << 
-		TabPoisson.size() << " poisson(s) dans l'aquarium.\n" << 
+	// Manger
+	if (!T_Poisson.empty())
+	{
+		TPoisson *T_ANourrir = new TPoisson();
+		PoissonPasNourri(OUT T_ANourrir);
+
+		while (!T_ANourrir->empty())
+		{
+			//TODO securiser si tableau vide
+			Poisson* Pred = (*T_ANourrir)[rand() % T_ANourrir->size()];
+
+			if (Pred->GetTypeNourriture())
+			{
+				if (T_Poisson.size() == 1)
+				{
+					Pred->SetEstNourri(true);
+				}
+				else
+				{
+					Poisson* Proie;
+					do
+					{
+						Proie = T_Poisson[rand() % T_Poisson.size()];
+					} while (Proie == Pred);
+
+					Pred->Manger(Proie);
+				}
+
+			}
+
+			else if (!Pred->GetTypeNourriture())
+			{
+				if (T_Algue.size() > 0)
+				{
+					Pred->Manger(T_Algue[0]);
+				}
+				else
+				{
+					Pred->SetEstNourri(true);
+				}
+			}
+
+			//Delete eaten food
+			Update();
+			PoissonPasNourri(OUT T_ANourrir);
+		}
+	}
+
+	std::cout << "Il y a " << T_Algue.size() << " algue(s) et " << 
+		T_Poisson.size() << " poisson(s) dans l'aquarium.\n" << 
 		"Liste des poissons :\n";
 
-	for (auto &poisson : TabPoisson) 
+	for (auto &poisson : T_Poisson) 
 	{
 		std::cout << poisson->GetName() << ", ";
 		switch (poisson->GetSexe())
@@ -63,18 +92,53 @@ void Aquarium::PasserTemps()
 		}
 	}
 
+
 	std::cout << std::endl;
 }
 
 void Aquarium::AjouterPoisson(Poisson * poisson)
 {
-	TabPoisson.push_back(poisson);
+	T_Poisson.push_back(poisson);
 	return;
 }
 
 void Aquarium::AjouterAlgue(Algue * algue)
 {
-	TabAlgue.push_back(algue);
+	T_Algue.push_back(algue);
 	return;
+}
+
+
+void Aquarium::PoissonPasNourri(OUT TPoisson * T_ANourrir)
+{
+	T_ANourrir->clear();
+	for (int i=0; i<T_Poisson.size(); i++)
+	{
+		if (!T_Poisson[i]->GetEstNourri())
+			T_ANourrir->push_back(&*T_Poisson[i]);
+	}
+
+	return;
+}
+
+void Aquarium::Update()
+{
+	TPoisson T_NewPoisson;
+	for (auto &poisson : T_Poisson) {
+		if (poisson->GetEstVivant())
+		{
+			T_NewPoisson.push_back(poisson);
+		}
+	}
+	T_Poisson = T_NewPoisson;
+
+	TAlgue T_NewAlgue;
+	for (auto &algue : T_Algue) {
+		if (algue->GetEstVivant())
+		{
+			T_NewAlgue.push_back(algue);
+		}
+	}
+	T_Algue = T_NewAlgue;
 }
 

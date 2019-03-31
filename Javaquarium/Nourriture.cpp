@@ -2,7 +2,7 @@
 #include "Nourriture.h"
 
 
-Nourriture::Nourriture() : EstVivant(true)
+Nourriture::Nourriture() : HP(10)
 {
 }
 
@@ -11,9 +11,11 @@ Nourriture::~Nourriture()
 {
 }
 
-bool Nourriture::GetEstVivant() { return EstVivant; }
+bool Nourriture::GetEstVivant() { return HP>0; }
+int Nourriture::GetHP() { return HP; }
 
-void Nourriture::SetEstVivant(bool b)
+void Nourriture::SetHP(int pt)
 {
-	EstVivant = b;
+	HP += pt;
 }
+

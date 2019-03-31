@@ -4,6 +4,7 @@
 
 Aquarium::Aquarium()
 {
+	srand(time(NULL));
 }
 
 
@@ -15,10 +16,20 @@ void Aquarium::PasserTemps()
 {
 	//// Actions ////
 
-	//Initialiser appetit
+	//Initialisation
 	for (auto &poisson : T_Poisson)
 	{
 		poisson->SetEstNourri(false);
+		if (poisson->GetHP() > 5)
+		{
+			poisson->SetEstNourri(true);
+		}
+		poisson->SetHP(-1); //Starvation
+		poisson->IncrAge(); //Ageing
+	}
+	for (auto &algue : T_Algue) 
+	{
+		algue->SetHP(1);; //Growth
 	}
 
 	// Manger
@@ -29,7 +40,6 @@ void Aquarium::PasserTemps()
 
 		while (!T_ANourrir->empty())
 		{
-			//TODO securiser si tableau vide
 			Poisson* Pred = (*T_ANourrir)[rand() % T_ANourrir->size()];
 
 			if (Pred->GetTypeNourriture())
@@ -40,13 +50,23 @@ void Aquarium::PasserTemps()
 				}
 				else
 				{
-					Poisson* Proie;
-					do
+					TPoisson *T_Proie = new TPoisson;
+					for (auto &poisson : T_Poisson)
 					{
-						Proie = T_Poisson[rand() % T_Poisson.size()];
-					} while (Proie == Pred);
+						if (poisson->GetID() != Pred->GetID())
+						{
+							T_Proie->push_back(poisson);
+						}
+					}
 
-					Pred->Manger(Proie);
+					if (T_Proie->size() == 0) { Pred->SetEstNourri(true); }
+					else 
+					{
+						Poisson *Proie = (*T_Proie)[rand() % T_Proie->size()];
+
+						Pred->Manger(Proie);
+						std::cout << Pred->GetName() << " graille " << Proie->GetName() << std::endl;
+					}		
 				}
 
 			}
@@ -69,31 +89,7 @@ void Aquarium::PasserTemps()
 		}
 	}
 
-	std::cout << "Il y a " << T_Algue.size() << " algue(s) et " << 
-		T_Poisson.size() << " poisson(s) dans l'aquarium.\n" << 
-		"Liste des poissons :\n";
-
-	for (auto &poisson : T_Poisson) 
-	{
-		std::cout << poisson->GetName() << ", ";
-		switch (poisson->GetSexe())
-		{
-		case 1:
-			std::cout << "male\n";
-			break;
-		case 2:
-			std::cout << "femelle\n";
-			break;
-		case 0:
-			std::cout << "hermaphrodite\n";
-			break;
-		default:
-			break;
-		}
-	}
-
-
-	std::cout << std::endl;
+	
 }
 
 void Aquarium::AjouterPoisson(Poisson * poisson)
@@ -106,6 +102,17 @@ void Aquarium::AjouterAlgue(Algue * algue)
 {
 	T_Algue.push_back(algue);
 	return;
+}
+
+void Aquarium::AfficherAquarium()
+{
+	std::cout << std::endl << "Il y a " << T_Algue.size() << " algue(s) et " <<
+		T_Poisson.size() << " poisson(s) dans l'aquarium.\n" << std::endl;
+}
+
+int Aquarium::GetTPoissonSize()
+{
+	return T_Poisson.size();
 }
 
 

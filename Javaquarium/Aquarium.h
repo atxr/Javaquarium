@@ -4,6 +4,7 @@
 #include "Algue.h"
 #include <iostream>
 #include <random>
+#include <time.h>
 
 #define OUT
 using TPoisson = std::vector<Poisson*>;
@@ -17,6 +18,8 @@ public:
 	void PasserTemps();
 	void AjouterPoisson(Poisson *poisson);
 	void AjouterAlgue(Algue *algue);
+	void AfficherAquarium();
+	int GetTPoissonSize();
 private:
 	void PoissonPasNourri(OUT TPoisson *T_);
 	void Update();

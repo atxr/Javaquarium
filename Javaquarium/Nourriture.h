@@ -6,8 +6,9 @@ public:
 	~Nourriture();
 	virtual bool GetTypeNourriture() = 0;
 	bool GetEstVivant();
-	void SetEstVivant(bool b = false);
-private:
-	bool EstVivant;
+	int GetHP();
+	void SetHP(int degat);
+protected:
+	int HP;
 };
 

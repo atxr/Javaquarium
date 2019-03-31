@@ -1,2 +1,11 @@
 ﻿  Aquarium.cpp
+c:\users\alex\source\repos\javaquarium\javaquarium\javaquarium\aquarium.cpp(7): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\alex\source\repos\javaquarium\javaquarium\javaquarium\aquarium.cpp(115): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  Especes.cpp
+  Javaquarium.cpp
+c:\users\alex\source\repos\javaquarium\javaquarium\javaquarium\javaquarium.cpp(13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Poisson.cpp
+  PoissonCarnivore.cpp
+  PoissonHerbivore.cpp
+  Generating Code...
   Javaquarium.vcxproj -> C:\Users\Alex\source\repos\Javaquarium\Javaquarium\x64\Debug\Javaquarium.exe

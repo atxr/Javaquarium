@@ -5,21 +5,35 @@
 #include <iostream>
 #include "Aquarium.h"
 #include "Especes.h"
+#include <random>
+#include <time.h>
 
 int main()
 {
+	srand(time(NULL));
 	Aquarium *aquarium = new Aquarium();
-	aquarium->AjouterAlgue(new Algue());
-	aquarium->AjouterPoisson(new Merou("Matthieu", 1));
-	aquarium->AjouterPoisson(new Merou("Marie", 1));
-	aquarium->PasserTemps();
-	aquarium->AjouterAlgue(new Algue());
-	aquarium->AjouterPoisson(new PoissonClown("Greg", 1));
-	aquarium->AjouterPoisson(new Bar("Baptiste", 1));
-	aquarium->AjouterPoisson(new Carpe("Justine", 2));
-	aquarium->PasserTemps();
-	aquarium->PasserTemps();
-	aquarium->PasserTemps();
+	for (int i = 0; i < 10; i++)
+	{
+		aquarium->AjouterPoisson(new Merou("Merou_" + std::to_string(i), rand() % 2));
+		aquarium->AjouterPoisson(new Bar("Bar_" + std::to_string(i), rand() % 2));
+		aquarium->AjouterPoisson(new PoissonClown("Clown_" + std::to_string(i), rand() % 2));
+		aquarium->AjouterPoisson(new Sole("Sole_" + std::to_string(i), rand() % 2));
+		aquarium->AjouterAlgue(new Algue());
+		aquarium->AjouterAlgue(new Algue());
+		aquarium->AjouterAlgue(new Algue());
+	}
+
+	aquarium->AfficherAquarium();
+
+	int i = 0;
+	while (aquarium->GetTPoissonSize() > 1)
+	{
+		aquarium->PasserTemps();
+		aquarium->AfficherAquarium();
+		i++;
+	}
+
+	std::cout << i;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
